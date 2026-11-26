@@ -237,7 +237,7 @@ RowKeyは、例えば固定桁の逆順Unixミリ秒とUUIDをハイフンで結
 - uv.lockに基づいてPython依存関係を固定し、AzureのPythonビルド用requirements.txtを生成する。
 - AzureのPython依存関係インストール方式を一つ選び、デプロイ成果物と整合させる。App Serviceのリモートビルドを利用する場合は必要なビルド設定を有効にする。
 - OIDCを優先する。GitHub Actionsのデプロイ権限は対象リソースに限定し、認証情報をコミットしない。
-- デプロイ後に/healthと主要画面を確認する。
+- デプロイ後はWeb Appを明示的に再起動し、新しいOryxビルドを読み込ませる。成果物の`forum/static/release.json`にコミットIDとCSSのSHA-256を含め、配信中のリリース情報・CSSが成果物と一致すること、/healthと一覧が正常であることを確認する。旧版がHTTP 200を返すだけでは成功としない。
 
 ## 11. テスト・実装順序
 
