@@ -2,17 +2,17 @@
 
 ## 基本方針
 
-- 作業開始前に本ファイルとルートの `requirements.md` を読み、要件・制約を確認する。仕様変更や実装判断の際にも再確認する。
+- 作業開始前に本ファイルとルートの `requirements.md` および `design.md` を読み、要件・基本設計・制約を確認する。仕様変更や実装判断の際にも再確認する。
 - 学校課題としてのMVPを優先し、2026年11月26日17:40までのデプロイを目標とする。不要な機能追加や過剰な抽象化を避ける。
 - 要件に矛盾する変更は独断で行わず、ユーザーに確認する。
 
 ## 技術構成
 
-- Python / Flask / Jinja2 / Gunicorn を使用する。フロントエンドはSSRを基本とし、不要なSPA化を行わない。
+- Python / Flask / Jinja2 / Gunicorn を使用する。フロントエンドはSSRを基本とし、Tailwind CSS（CLIビルド）とVanilla JavaScriptを使用する。不要なSPA化を行わない。
 - 投稿・コメントは Azure Table Storage (`Posts`, `Comments`) に保存する。
 - 添付画像は Azure Blob Storage の非公開 `images` コンテナに保存する。
 - Azure App Service (Linux) でホストし、GitHub Actions による CI/CD を構成する。
-- 機能要件、入力制約、受入条件は `requirements.md` に従う。
+- 機能要件、入力制約、受入条件は `requirements.md` に従う。技術選定、データ設計、画面設計、CI/CD等の実装方針は `design.md` に従う。両文書や本ファイルに矛盾がある場合は独断で解消せず報告する。
 
 ## Azure 操作・コスト制約
 
