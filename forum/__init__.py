@@ -23,6 +23,7 @@ def create_app(config=None):
         SESSION_COOKIE_SECURE=os.getenv("COOKIE_SECURE", "true").lower() != "false",
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
+        WTF_I18N_ENABLED=False,
     )
     if config:
         app.config.update(config)
