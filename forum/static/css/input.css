@@ -5,26 +5,26 @@
 @layer components {
   .board {
     min-height: 100vh; color: #f7f2df; background-color: #28594a;
-    background-image: radial-gradient(ellipse at 20% 0%, #82a27830, transparent 65%), repeating-linear-gradient(18deg, #081f191c 0 1px, transparent 1px 4px), repeating-linear-gradient(108deg, #d1e1bc12 0 1px, transparent 1px 5px);
-    border: 10px solid #95704b;
-    border-image: repeating-linear-gradient(93deg, #755134, #b38c5f 8px, #8d6844 12px, #a68055 19px) 10;
+    background-image: radial-gradient(ellipse at 20% 0%, #82a27830, transparent 65%), repeating-linear-gradient(0deg, #081f191c 0 1px, transparent 1px 4px), repeating-linear-gradient(90deg, #d1e1bc12 0 1px, transparent 1px 5px);
+    border: 10px solid #a7adb0;
+    border-image: linear-gradient(180deg, #e6e9eb, #8b9499 25%, #d2d7da 50%, #7c858a 75%, #e3e7e9) 10;
     box-shadow: inset 0 0 0 2px #18372b, inset 0 5px 24px #102d24a6;
   }
-  .board-header { border-bottom: 1px solid #e3e9ce38; background: #153d3238; }
+  .board-header { display: flex; justify-content: center; padding: 2rem 1rem 0; }
   .board-width { max-width: 70rem; margin-inline: auto; padding-inline: 1.5rem; }
-  .brand { color: #fff9e6; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; }
+  .brand { display: inline-block; padding: 1rem 2rem; color: #303b32; background: #fcf8eb; border: 1px solid #e4ddc6; box-shadow: 2px 4px 8px #102d2459; font-size: 1.5rem; font-weight: 800; letter-spacing: .08em; text-align: center; }
   .board-muted { color: #d7dfcb; }
   .board-link { color: #fff0bb; text-decoration: underline; text-underline-offset: 5px; }
   .board-link:hover { color: #fff; }
-  .board-footer { border-top: 1px solid #e3e9ce38; color: #d7dfcb; }
-  .board-heading { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; text-shadow: 1px 2px 1px #163b30; }
-  .board-intro { position: relative; padding-block: .5rem 1.25rem; }
-  .board-intro::after { content: ""; display: block; width: 4rem; margin-top: 1.5rem; border-bottom: 3px solid #d7dfcb88; transform: rotate(-2deg); }
+  .board-footer { border-top: 1px solid #e3e9ce38; color: #d7dfcb; padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)); }
+  .board-heading { font-weight: 800; }
+  .compose-button { position: fixed; z-index: 20; right: calc(1.25rem + env(safe-area-inset-right, 0px)); bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: center; width: 3.75rem; height: 3.75rem; border: 1px solid #b29357; border-radius: 50%; color: #303b32; background: #f2d58e; box-shadow: 0 4px 14px #102d2466; }
+  .compose-button:hover { background: #ffe6a6; }
+  .compose-button svg { width: 1.75rem; height: 1.75rem; }
   .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .7rem 1.25rem; border: 1px solid #b29357; border-radius: 3px; background: #f2d58e; color: #383529; font-size: .875rem; font-weight: 700; box-shadow: 2px 3px 0 #132e2640; }
   .button:hover { background: #ffe6a6; }
   .card {
     position: relative; min-width: 0; overflow-wrap: anywhere; padding: 2.75rem 1.75rem 1.75rem; color: #303b32; border: 1px solid #e4ddc6; border-radius: 1px; background-color: #fcf8eb;
-    background-image: repeating-linear-gradient(0deg, #ac9c7410 0 1px, transparent 1px 4px), linear-gradient(110deg, #fffdf570, transparent 65%, #c8b98e18);
     box-shadow: 1px 3px 3px #102d2440, 5px 9px 15px #102d244d;
   }
   .card::before {
@@ -36,11 +36,11 @@
   .post-card { padding-top: 3.5rem; transition: box-shadow .15s ease; }
   .post-card:nth-child(3n + 2) { background-color: #f5efd9; }
   .post-card:hover { box-shadow: 2px 4px 4px #102d2450, 6px 12px 20px #102d2466; }
-  .post-title { overflow-wrap: anywhere; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; }
+  .post-title { overflow-wrap: anywhere; font-weight: 700; }
   .paper-link { color: #365c45; }
   .paper-link:hover { color: #91472e; text-decoration: underline; text-underline-offset: 4px; }
   .paper-muted { color: #626854; }
-  .post-meta { border-bottom: 1px dashed #b9b69d; padding-bottom: .8rem; }
+  .post-meta { padding-bottom: .25rem; }
   .category-tape {
     position: absolute; top: -.6rem; right: .9rem; z-index: 3; display: inline-block; min-width: 5.5rem; padding: .65rem 1.2rem;
     color: #394435; background-color: #dfc991; background-image: repeating-linear-gradient(93deg, #ffffff20 0 2px, transparent 2px 5px);
@@ -63,12 +63,9 @@
   .form-paper { max-width: 48rem; margin-inline: auto; }
   .skip-link:focus { position: fixed; top: 1rem; left: 1rem; z-index: 10; padding: .75rem; color: #303b32; background: #fffdf5; }
   @media (max-width: 640px) {
-    .board { border-width: 6px; }
+    .board { border-width: 8px 0; }
     .board-width { padding-inline: 1rem; }
-    .board-header .board-width { gap: .75rem; }
-    .brand { font-size: 1.125rem; }
-    .brand span { font-size: .65rem; }
-    .board-header .button { padding-inline: .85rem; flex-shrink: 0; }
+    .brand { padding: .85rem 1.5rem; font-size: 1.375rem; }
     .post-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
     .card { padding-inline: 1.25rem; }
     .comment-paper { margin-left: .5rem; }
@@ -77,7 +74,7 @@
   @media (prefers-reduced-motion: reduce) { .post-card { transition: none; } }
 }
 @layer base {
-  body { font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; }
+  body { font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", Meiryo, "MS Gothic", sans-serif; font-weight: 500; }
   a, button, input, textarea, select { @apply focus-visible:outline-2 focus-visible:outline-offset-4; outline-color: #b95828; }
   textarea { resize: vertical; }
   button { cursor: pointer; }

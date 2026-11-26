@@ -10,18 +10,18 @@
 <body class="board antialiased">
   <a class="skip-link sr-only focus:not-sr-only" href="#main">本文へ移動</a>
   <header class="board-header">
-    <div class="board-width flex items-center justify-between gap-4 px-4 py-5">
-      <a class="brand text-xl font-bold tracking-tight" href="{{ url_for('board.index') }}">放課後ボード<span class="mt-1 block board-muted text-xs font-normal tracking-widest">AFTER SCHOOL BOARD</span></a>
-      <a class="button" href="{{ url_for('board.new_post') }}">＋ 投稿する</a>
-    </div>
+    <a class="brand" href="{{ url_for('board.index') }}">放課後ボード</a>
   </header>
   <main id="main" class="board-width min-h-[70vh] py-8 sm:py-12">
     {% for message in get_flashed_messages() %}<p role="status" class="flash-note mb-6">{{ message }}</p>{% endfor %}
     {% block content %}{% endblock %}
   </main>
-  <footer class="board-width board-footer py-6 text-sm leading-6">
+  <footer class="board-width board-footer pt-6 text-sm leading-6">
     <p>放課後ボード · 学校課題用の実証環境</p>
     <p>本名・学校名・住所などの個人情報や、他人の写真を無断で投稿しないでください。</p>
   </footer>
+  <a class="compose-button" href="{{ url_for('board.new_post') }}" aria-label="新しい話題を投稿" title="新しい話題を投稿">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+  </a>
 </body>
 </html>
