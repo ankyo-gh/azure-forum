@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from '_fields.html' import field %}
+{% block title %}{{ post.title }} · 放課後ボード{% endblock %}
+{% block content %}
+<a class="text-sm text-indigo-700 hover:underline" href="{{ url_for('board.index') }}">← 一覧へ戻る</a>
+<article class="card mt-6">
+  <div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-slate-500"><a class="badge" href="{{ url_for('board.index', category=post.category) }}">{{ categories[post.category] }}</a><span>{{ post.nickname }}</span><time>{{ post.created_at|jst }}</time></div>
+  <h1 class="break-words text-2xl font-bold leading-snug">{{ post.title }}</h1>
+  <p class="mt-6 whitespace-pre-wrap break-words leading-8">{{ post.body }}</p>
+  {% if post.image_blob %}<a href="{{ url_for('board.image', blob_name=post.image_blob) }}"><img class="mt-6 max-h-[600px] max-w-full rounded-xl object-contain" src="{{ url_for('board.image', blob_name=post.image_blob) }}" alt="投稿に添付された画像"></a>{% endif %}
+</article>
+<section id="comments" class="mt-10">
+  <h2 class="mb-5 text-xl font-bold">コメント <span class="text-base font-normal text-slate-500">{{ comments|length }}件 · 古い順</span></h2>
+  <div class="space-y-3">{% for comment in comments %}<article class="card"><div class="mb-3 flex flex-wrap gap-3 text-sm text-slate-500"><span class="font-semibold text-slate-700">{{ comment.nickname }}</span><time>{{ comment.created_at|jst }}</time></div><p class="whitespace-pre-wrap break-words leading-7">{{ comment.body }}</p></article>{% else %}<p class="mb-6 text-slate-600">まだコメントはありません。最初のひと言をどうぞ。</p>{% endfor %}</div>
+  <form class="card mt-6" action="{{ url_for('board.create_comment', post_id=post.RowKey) }}" method="post">
+    <h3 class="mb-6 text-lg font-bold">コメントを投稿</h3>
+    {{ form.hidden_tag() }}
+    {{ field(form.nickname, '20文字以内・省略すると「匿名」') }}
+    {{ field(form.body, '1〜500文字・個人情報は書き込まないでください', rows=4) }}
+    <button class="button" type="submit">コメントする</button>
+  </form>
+</section>
+{% endblock %}
