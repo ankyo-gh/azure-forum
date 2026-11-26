@@ -92,6 +92,25 @@ uv run python scripts/package.py
 
 GitHub ActionsのAzure認証はOIDCです。`main`ブランチのトークンのみを信頼し、マネージドIDの権限は対象Web Appの`Website Contributor`に限定しています。GitHubには秘密鍵・Publish Profileを保存しません。Repository Variablesに`AZURE_CLIENT_ID`、`AZURE_TENANT_ID`、`AZURE_SUBSCRIPTION_ID`を設定します。これらのIDは秘密値ではありません。管理者がローカルGit認証を利用して再設定する場合は`uv run python scripts/configure_github.py`を使えます。
 
+OIDCの信頼条件は、ユーザー割り当てマネージドID `id-afterschool-github` のフェデレーション資格情報 `github-main` に設定しています。Entra IDのアプリ登録を編集する必要はありません。修正には、このマネージドIDのフェデレーション資格情報を更新するAzure RBAC権限が必要です。
+
+| 項目 | 設定値 |
+|---|---|
+| Issuer | `https://token.actions.githubusercontent.com` |
+| Audience | `api://AzureADTokenExchange` |
+| Subject | `repo:ankyo-gh@206799426/azure-forum@1472783074:ref:refs/heads/main` |
+
+このリポジトリはユーザーIDとリポジトリIDを含む[GitHubのimmutable subject形式](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims)を使用します。従来の `repo:ankyo-gh/azure-forum:ref:refs/heads/main` では `AADSTS700213` になります。ログのsubjectと登録値を完全一致させてください。今回の修正ではIssuer・Audience・Web AppへのRBAC権限は変更していません。
+
+同じ不一致を修正する場合は、`az account show` で対象がAzure for Studentsであることを確認してから、既存の資格情報のSubjectを更新します（[Azure CLIの公式手順](https://learn.microsoft.com/en-us/cli/azure/identity/federated-credential?view=azure-cli-latest#az-identity-federated-credential-update)）。
+
+```sh
+az account show
+az identity federated-credential update --subscription 2351e4b2-3a33-40db-b6f8-1c4de902bad6 --resource-group rg-afterschool-board --identity-name id-afterschool-github --name github-main --subject 'repo:ankyo-gh@206799426/azure-forum@1472783074:ref:refs/heads/main'
+```
+
+更新後、GitHub Actionsの失敗したdeployジョブだけを再実行し、Azure Login、デプロイ、`/health`と一覧の確認が成功することを確認します。権限エラーの場合は対象リソースの管理者へ依頼し、認証方式の変更や権限の拡大で迂回しません。
+
 手動デプロイ（同じリモートビルド方式）:
 
 ```sh
@@ -108,4 +127,4 @@ az webapp deploy --resource-group rg-afterschool-board --name afterschool-board-
 - Web App再起動後、同じ投稿・画像・コメントの取得を確認済みです。
 - Chromeの390px幅で一覧・投稿フォーム・詳細に横はみ出しがなく、画像エラー時に入力内容が保持されることを確認しました。1280px幅でも一覧を確認しました。
 - ローカルpytest 30件、Ruff、Tailwindビルド、PRのGitHub Actions CIが成功しています。
-- main更新によるOIDC自動デプロイ（A-10）はPRマージ後の確認が必要です。mainへの直接コミットや無断マージは行いません。
+- main更新によるOIDC自動デプロイ（A-10）は[実行45780315661の再実行](https://github.com/ankyo-gh/azure-forum/actions/runs/45780315661)で確認済みです。Subject不一致を修正後、Azure Login、デプロイ、`/health`と一覧の検証が成功しました。mainへの直接コミットや無断マージは行いません。
