@@ -1,0 +1,11 @@
+{
+  "name": "afterschool-board",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i forum/static/css/input.css -o forum/static/css/app.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}

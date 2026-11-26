@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}放課後ボード{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+  <a class="sr-only focus:not-sr-only" href="#main">本文へ移動</a>
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-5">
+      <a class="text-xl font-bold tracking-tight text-indigo-700" href="{{ url_for('board.index') }}">放課後ボード<span class="mt-1 block text-xs font-normal tracking-widest text-slate-500">AFTER SCHOOL BOARD</span></a>
+      <a class="button" href="{{ url_for('board.new_post') }}">＋ 投稿する</a>
+    </div>
+  </header>
+  <main id="main" class="mx-auto min-h-[70vh] max-w-4xl px-4 py-8 sm:py-12">
+    {% for message in get_flashed_messages() %}<p role="status" class="mb-6 rounded-xl bg-indigo-50 p-4 text-indigo-800">{{ message }}</p>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="mx-auto max-w-4xl border-t border-slate-200 px-4 py-6 text-sm leading-6 text-slate-600">
+    <p>放課後ボード · 学校課題用の実証環境</p>
+    <p>本名・学校名・住所などの個人情報や、他人の写真を無断で投稿しないでください。</p>
+  </footer>
+</body>
+</html>
