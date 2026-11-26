@@ -2,7 +2,7 @@
 <div class="mb-5">
   {{ input.label(class='mb-2 block text-sm font-semibold') }}
   {% if rows %}{{ input(class='field', rows=rows, aria_describedby=input.id ~ '-hint ' ~ input.id ~ '-errors') }}{% else %}{{ input(class='field', aria_describedby=input.id ~ '-hint ' ~ input.id ~ '-errors') }}{% endif %}
-  <p id="{{ input.id }}-hint" class="mt-1 text-sm text-slate-600">{{ hint }}</p>
+  <p id="{{ input.id }}-hint" class="mt-1 text-sm paper-muted">{{ hint }}</p>
   <div id="{{ input.id }}-errors" role="alert">{% for error in input.errors %}<p class="mt-1 text-sm font-medium text-red-700">入力を確認してください：{{ error }}</p>{% endfor %}</div>
 </div>
 {% endmacro %}

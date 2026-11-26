@@ -2,17 +2,17 @@
 {% from '_fields.html' import field %}
 {% block title %}新しい話題を投稿 · 放課後ボード{% endblock %}
 {% block content %}
-<a class="text-sm text-indigo-700 hover:underline" href="{{ url_for('board.index') }}">← 一覧へ戻る</a>
-<h1 class="mb-3 mt-6 text-2xl font-bold">新しい話題を投稿</h1>
-<p class="mb-7 leading-7 text-slate-600">ニックネームだけで参加できます。未入力なら「匿名」になります。</p>
-<form class="card" action="{{ url_for('board.create_post') }}" method="post" enctype="multipart/form-data">
+<a class="text-sm board-link" href="{{ url_for('board.index') }}">一覧へ戻る</a>
+<h1 class="board-heading mb-3 mt-6 text-2xl font-bold">新しい話題を投稿</h1>
+<p class="mb-7 leading-7 board-muted">ニックネームだけで参加できます。未入力なら「匿名」になります。</p>
+<form class="card form-paper" action="{{ url_for('board.create_post') }}" method="post" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   {{ field(form.nickname, '20文字以内・省略可') }}
   {{ field(form.category, '話題に合うカテゴリを選んでください') }}
   {{ field(form.title, '1〜80文字') }}
   {{ field(form.body, '1〜2,000文字', rows=8) }}
-  <div class="mb-6">{{ form.image.label(class='mb-2 block text-sm font-semibold') }}{{ form.image(class='field', accept='image/jpeg,image/png,image/webp', aria_describedby='image-hint image-errors') }}<p id="image-hint" class="mt-2 text-sm text-slate-600">JPEG・PNG・WebP / 1枚 / 5 MiB以下 / 2,000万画素以下。位置情報などは保存時に除去します。</p><div id="image-errors" role="alert">{% for error in form.image.errors %}<p class="mt-2 text-sm text-red-700">{{ error }}</p>{% endfor %}</div><p id="image-feedback" class="mt-2 text-sm text-slate-600" aria-live="polite"></p></div>
-  <p class="mb-6 rounded-lg bg-slate-50 p-4 text-sm leading-6 text-slate-600">個人情報や他人の写真を無断で投稿しないでください。相手を思いやる言葉で、気持ちよく話しましょう。</p>
+  <div class="mb-6">{{ form.image.label(class='mb-2 block text-sm font-semibold') }}{{ form.image(class='field', accept='image/jpeg,image/png,image/webp', aria_describedby='image-hint image-errors') }}<p id="image-hint" class="mt-2 text-sm paper-muted">JPEG・PNG・WebP / 1枚 / 5 MiB以下 / 2,000万画素以下。位置情報などは保存時に除去します。</p><div id="image-errors" role="alert">{% for error in form.image.errors %}<p class="mt-2 text-sm text-red-700">{{ error }}</p>{% endfor %}</div><p id="image-feedback" class="mt-2 text-sm paper-muted" aria-live="polite"></p></div>
+  <p class="paper-note mb-6 p-4 text-sm leading-6">個人情報や他人の写真を無断で投稿しないでください。相手を思いやる言葉で、気持ちよく話しましょう。</p>
   <button class="button" type="submit">投稿する</button>
 </form>
 {% endblock %}
