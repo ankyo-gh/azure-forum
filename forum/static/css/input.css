@@ -3,14 +3,82 @@
 @source "../js";
 
 @layer components {
-  .button { @apply inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700; }
-  .card { @apply rounded-2xl border border-slate-200 bg-white p-5 sm:p-7; }
-  .field { @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900; }
-  .chip { @apply rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-indigo-400; }
-  .chip-selected { @apply border-indigo-600 bg-indigo-600 text-white; }
-  .badge { @apply rounded-md bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700; }
+  .board {
+    min-height: 100vh; color: #f7f2df; background-color: #28594a;
+    background-image: radial-gradient(ellipse at 20% 0%, #82a27830, transparent 65%), repeating-linear-gradient(18deg, #081f191c 0 1px, transparent 1px 4px), repeating-linear-gradient(108deg, #d1e1bc12 0 1px, transparent 1px 5px);
+    border: 10px solid #95704b;
+    border-image: repeating-linear-gradient(93deg, #755134, #b38c5f 8px, #8d6844 12px, #a68055 19px) 10;
+    box-shadow: inset 0 0 0 2px #18372b, inset 0 5px 24px #102d24a6;
+  }
+  .board-header { border-bottom: 1px solid #e3e9ce38; background: #153d3238; }
+  .board-width { max-width: 70rem; margin-inline: auto; padding-inline: 1.5rem; }
+  .brand { color: #fff9e6; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; }
+  .board-muted { color: #d7dfcb; }
+  .board-link { color: #fff0bb; text-decoration: underline; text-underline-offset: 5px; }
+  .board-link:hover { color: #fff; }
+  .board-footer { border-top: 1px solid #e3e9ce38; color: #d7dfcb; }
+  .board-heading { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; text-shadow: 1px 2px 1px #163b30; }
+  .board-intro { position: relative; padding-block: .5rem 1.25rem; }
+  .board-intro::after { content: ""; display: block; width: 4rem; margin-top: 1.5rem; border-bottom: 3px solid #d7dfcb88; transform: rotate(-2deg); }
+  .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .7rem 1.25rem; border: 1px solid #b29357; border-radius: 3px; background: #f2d58e; color: #383529; font-size: .875rem; font-weight: 700; box-shadow: 2px 3px 0 #132e2640; }
+  .button:hover { background: #ffe6a6; }
+  .card {
+    position: relative; min-width: 0; overflow-wrap: anywhere; padding: 2.75rem 1.75rem 1.75rem; color: #303b32; border: 1px solid #e4ddc6; border-radius: 1px; background-color: #fcf8eb;
+    background-image: repeating-linear-gradient(0deg, #ac9c7410 0 1px, transparent 1px 4px), linear-gradient(110deg, #fffdf570, transparent 65%, #c8b98e18);
+    box-shadow: 1px 3px 3px #102d2440, 5px 9px 15px #102d244d;
+  }
+  .card::before {
+    content: ""; position: absolute; z-index: 2; top: .8rem; left: 1.4rem; width: 13px; height: 13px; border: 1px solid #813b29; border-radius: 50%;
+    background: radial-gradient(circle at 32% 25%, #f9bc91 0 9%, #c76747 24%, #93452f 68%, #673624 100%);
+    box-shadow: 1px 2px 1px #613b2f99, 3px 5px 3px #41392945;
+  }
+  .post-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; align-items: start; }
+  .post-card { padding-top: 3.5rem; transition: box-shadow .15s ease; }
+  .post-card:nth-child(3n + 2) { background-color: #f5efd9; }
+  .post-card:hover { box-shadow: 2px 4px 4px #102d2450, 6px 12px 20px #102d2466; }
+  .post-title { overflow-wrap: anywhere; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; }
+  .paper-link { color: #365c45; }
+  .paper-link:hover { color: #91472e; text-decoration: underline; text-underline-offset: 4px; }
+  .paper-muted { color: #626854; }
+  .post-meta { border-bottom: 1px dashed #b9b69d; padding-bottom: .8rem; }
+  .category-tape {
+    position: absolute; top: -.6rem; right: .9rem; z-index: 3; display: inline-block; min-width: 5.5rem; padding: .65rem 1.2rem;
+    color: #394435; background-color: #dfc991; background-image: repeating-linear-gradient(93deg, #ffffff20 0 2px, transparent 2px 5px);
+    font-size: .875rem; font-weight: 700; text-align: center; transform: rotate(5deg);
+    clip-path: polygon(3% 0, 98% 2%, 96% 15%, 100% 26%, 97% 40%, 100% 58%, 97% 75%, 99% 100%, 1% 98%, 3% 83%, 0 65%, 3% 48%, 0 30%);
+  }
+  .category-tape[data-category="school"] { background-color: #c0cda3; }
+  .category-tape[data-category="career"] { background-color: #b9ced0; }
+  .category-tape[data-category="hobby"] { background-color: #d8c2d3; }
+  .category-tape[data-category="chat"] { background-color: #e4baa0; }
+  .category-tape:focus-visible { outline: none; box-shadow: inset 0 0 0 3px #91472e; }
+  .chip { display: inline-flex; min-height: 44px; align-items: center; padding: .5rem 1.1rem; color: #f4f2dd; border: 1px solid #afc1a685; border-radius: 2px; background: #153f3238; font-size: .875rem; font-weight: 600; }
+  .chip:hover { background: #386a54; border-color: #e9e2c3; }
+  .chip-selected, .chip-selected:hover { background: #eee8cd; color: #2f4c39; border-color: #eee8cd; box-shadow: 2px 3px 2px #12302640; }
+  .field { display: block; width: 100%; min-width: 0; border: 1px solid #b8b79f; border-radius: 2px; padding: .7rem .8rem; background: #fffdf5; color: #303b32; font-size: 1rem; box-shadow: inset 0 1px 3px #786c4310; }
+  .field::file-selector-button { margin-right: .75rem; border: 1px solid #b8b79f; border-radius: 2px; padding: .3rem .5rem; background: #eee8cd; color: #303b32; }
+  .paper-note { background: #ede8d5; border-left: 3px solid #a29468; color: #626854; }
+  .flash-note { padding: 1rem 1.25rem; color: #303b32; background: #f2e5b6; box-shadow: 2px 3px 4px #132e2630; }
+  .comment-paper { margin-left: 1.25rem; }
+  .form-paper { max-width: 48rem; margin-inline: auto; }
+  .skip-link:focus { position: fixed; top: 1rem; left: 1rem; z-index: 10; padding: .75rem; color: #303b32; background: #fffdf5; }
+  @media (max-width: 640px) {
+    .board { border-width: 6px; }
+    .board-width { padding-inline: 1rem; }
+    .board-header .board-width { gap: .75rem; }
+    .brand { font-size: 1.125rem; }
+    .brand span { font-size: .65rem; }
+    .board-header .button { padding-inline: .85rem; flex-shrink: 0; }
+    .post-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+    .card { padding-inline: 1.25rem; }
+    .comment-paper { margin-left: .5rem; }
+    .category-tape { right: .65rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .post-card { transition: none; } }
 }
 @layer base {
-  a, button, input, textarea, select { @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600; }
+  body { font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; }
+  a, button, input, textarea, select { @apply focus-visible:outline-2 focus-visible:outline-offset-4; outline-color: #b95828; }
+  textarea { resize: vertical; }
   button { cursor: pointer; }
 }
