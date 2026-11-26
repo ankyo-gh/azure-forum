@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="board-intro mb-6">
-  <p class="mb-3 text-sm font-semibold tracking-widest board-muted">今日の疑問も、好きなことも。</p>
-  <h1 class="board-heading text-3xl font-bold tracking-tight sm:text-4xl">放課後、何話す？</h1>
-  <p class="mt-4 leading-7 board-muted">勉強のこと、進路のこと、ちょっとした雑談。<br>気になる話題を、ここから話してみよう。</p>
-</section>
+<h1 class="sr-only">投稿一覧</h1>
 <nav aria-label="カテゴリで絞り込み" class="mb-10 flex flex-wrap gap-2">
   <a class="chip {% if not selected %}chip-selected{% endif %}" href="{{ url_for('board.index') }}" {% if not selected %}aria-current="page"{% endif %}>すべて</a>
   {% for key, name in categories.items() %}<a class="chip {% if selected == key %}chip-selected{% endif %}" href="{{ url_for('board.index', category=key) }}" {% if selected == key %}aria-current="page"{% endif %}>{{ name }}</a>{% endfor %}
