@@ -90,6 +90,8 @@ uv run python scripts/package.py
 
 `dist/app.zip`はアプリとビルド済みCSS、ロックから生成した`requirements.txt`だけを含みます。Azure OryxのリモートビルドでPython依存関係をインストールします。`.env`、仮想環境、Node.js依存関係、認証情報は含めません。
 
+成果物には`forum/static/release.json`も含み、コミットIDとCSSのSHA-256を記録します。デプロイ後にWeb Appを明示的に再起動し、`scripts/verify_deployment.py`で配信中のリリース情報・CSSが成果物と一致すること、ヘルスチェック・一覧が正常であることを確認します。2026年11月26日に配置成功後も旧アプリが配信される事象があり、Web Appの再起動で最新画面に切り替わることを確認しました。HTTP 200だけでは新版の反映確認にならないため、この照合を行います。
+
 GitHub ActionsのAzure認証はOIDCです。`main`ブランチのトークンのみを信頼し、マネージドIDの権限は対象Web Appの`Website Contributor`に限定しています。GitHubには秘密鍵・Publish Profileを保存しません。Repository Variablesに`AZURE_CLIENT_ID`、`AZURE_TENANT_ID`、`AZURE_SUBSCRIPTION_ID`を設定します。これらのIDは秘密値ではありません。管理者がローカルGit認証を利用して再設定する場合は`uv run python scripts/configure_github.py`を使えます。
 
 OIDCの信頼条件は、ユーザー割り当てマネージドID `id-afterschool-github` のフェデレーション資格情報 `github-main` に設定しています。Entra IDのアプリ登録を編集する必要はありません。修正には、このマネージドIDのフェデレーション資格情報を更新するAzure RBAC権限が必要です。
